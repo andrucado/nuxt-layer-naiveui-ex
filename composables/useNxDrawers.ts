@@ -10,7 +10,7 @@ export type NxDrawerShowParams = {
 
 type NxDrawerItem = NxDrawerShowParams & { show?: boolean }
 
-export function useNxDrawers() {
+export const useNxDrawers = createGlobalState(() => {
   const drawers = ref<NxDrawerItem[]>([])
 
   async function show(params: NxDrawerShowParams) {
@@ -35,4 +35,4 @@ export function useNxDrawers() {
   }
 
   return { drawers, show, hide }
-}
+})

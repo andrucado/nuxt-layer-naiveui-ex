@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import type { MenuMixedOption } from 'naive-ui/es/menu/src/interface'
+import type { FollowerPlacement } from 'vueuc'
 import { Icon } from '@iconify/vue'
 
-const props = defineProps<{
-  options: (MenuMixedOption & { iconName: string })[]
+export type NxPopmenuProps = {
+  options: (MenuMixedOption & { iconName?: string })[]
+  position?: { x: number; y: number }
+  placement?: FollowerPlacement
   disabled?: boolean
-}>()
+}
+
+const props = defineProps<NxPopmenuProps>()
 
 const emit = defineEmits<{
   (e: 'select', key: string): void
@@ -26,8 +31,16 @@ function onUpdateValue(key?: string) {
 </script>
 
 <template lang="pug">
-n-popover(v-model:show="show" placement="bottom-end" trigger="click" style="--n-padding: 0")
-  template(#trigger)
+n-popover(
+  v-model:show="show",
+  :placement="placement ?? 'bottom-end'",
+  :trigger="position ? 'click' : 'manual'",
+  :x="position?.x ? position.x : undefined",
+  :y="position?.y ? position.y : undefined"
+  style="--n-padding: 0",
+  :disabled="disabled"
+)
+  template(v-if="$slots.default" v-slot:trigger)
     slot
   n-menu.nx-popmenu(@update:value="onUpdateValue", :options="options", :render-icon="renderIcon", :disabled="disabled")
 </template>

@@ -1,7 +1,7 @@
 {
   "name": "@andrucado/nuxt-layer-naiveui-ex",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./nuxt.config.ts",
   "repository": "https://github.com/andrucado/nuxt-layer-naiveui-ex.git",
   "scripts": {
@@ -27,10 +27,14 @@
     "@iconify/vue": "^5.0.0",
     "@unocss/extractor-pug": "^66.1.2",
     "@unocss/nuxt": "^66.1.2",
+    "@vueuse/components": "^13.2.0",
     "@vueuse/core": "^13.2.0",
     "@vueuse/nuxt": "^13.2.0",
+    "eventemitter3": "^5.0.1",
     "lodash-es": "^4.17.21",
-    "naive-ui": "^2.41.0"
+    "naive-ui": "^2.41.0",
+    "pug": "^3.0.3",
+    "sass": "^1.89.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
