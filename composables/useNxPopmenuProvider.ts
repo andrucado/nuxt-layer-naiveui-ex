@@ -13,8 +13,9 @@ export const useNxPopmenuProvider = createGlobalState(() => {
   const current = ref<NxPopmenuShow & { show: boolean }>()
   let timeout: NodeJS.Timeout | undefined = undefined
   let lastOnSelectListener: ((key: string) => void) | undefined = undefined
+  let lastShow: number | undefined = undefined
 
-  async function show(params: NxPopmenuShow, callback: (key: string) => void) {
+  function show(params: NxPopmenuShow, callback: (key: string) => void) {
     const hadTimeout = !!timeout
     if (timeout) {
       clearTimeout(timeout)
@@ -30,11 +31,13 @@ export const useNxPopmenuProvider = createGlobalState(() => {
       eventSelect.on(callback)
     }
     lastOnSelectListener = callback
+    lastShow = Date.now()
   }
 
   function hide() {
     const item = current.value
     if (!item) return
+    if (lastShow && Date.now() - lastShow < 100) return
 
     item.show = false
     timeout = setTimeout(() => {

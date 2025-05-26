@@ -25,7 +25,8 @@ n-popover(
   trigger="manual",
   :x="current.position.x",
   :y="current.position.y"
-  style="--n-padding: 0"
+  style="--n-padding: 0",
+  :placement="current.placement"
 )
   n-menu.nx-popmenu(@update:value="emitSelect($event)", :options="current.options", :render-icon="renderIcon")
 </template>
