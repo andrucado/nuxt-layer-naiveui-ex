@@ -1,9 +1,9 @@
 {
   "name": "@andrucado/nuxt-layer-naiveui-ex",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./nuxt.config.ts",
-  "repository":"https://github.com/andrucado/nuxt-layer-naiveui-ex.git",
+  "repository": "https://github.com/andrucado/nuxt-layer-naiveui-ex.git",
   "scripts": {
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@nuxt/eslint": "latest",
     "@prettier/plugin-pug": "^3.4.0",
+    "@types/lodash-es": "^4.17.12",
     "eslint": "^9.27.0",
     "nuxt": "^3.17.4",
     "prettier": "^3.5.3",
@@ -23,6 +24,9 @@
   },
   "dependencies": {
     "@bg-dev/nuxt-naiveui": "2.0.0-rc.5",
+    "@iconify/vue": "^5.0.0",
+    "@unocss/extractor-pug": "^66.1.2",
+    "@unocss/nuxt": "^66.1.2",
     "@vueuse/core": "^13.2.0",
     "@vueuse/nuxt": "^13.2.0",
     "lodash-es": "^4.17.21",
