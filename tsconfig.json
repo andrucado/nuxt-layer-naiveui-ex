@@ -2,5 +2,10 @@
   "extends": "./.playground/.nuxt/tsconfig.json",
   "compilerOptions": {
     "noImplicitAny": false
+  },
+  "vueCompilerOptions": {
+    "plugins": [
+      "@vue/language-plugin-pug"
+    ]
   }
 }
