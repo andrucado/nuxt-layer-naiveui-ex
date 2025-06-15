@@ -33,14 +33,13 @@ function onUpdateValue(key?: string) {
 <template lang="pug">
 n-popover(
   v-model:show="show",
-  :placement="placement ?? 'bottom-end'",
-  :trigger="position ? 'click' : 'manual'",
+  :placement,
+  :trigger="position ? 'manual' : 'click'",
   :x="position?.x ? position.x : undefined",
   :y="position?.y ? position.y : undefined"
-  style="--n-padding: 0",
-  :disabled="disabled"
+  style="--n-padding: 0"
 )
-  template(v-if="$slots.default" v-slot:trigger)
+  template(#trigger)
     slot
   n-menu.nx-popmenu(@update:value="onUpdateValue", :options="options", :render-icon="renderIcon", :disabled="disabled")
 </template>

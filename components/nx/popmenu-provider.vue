@@ -21,7 +21,7 @@ function renderIcon({ iconName }: any) {
 n-popover(
   v-if="current"
   v-bind:show="current.show"
-  @clickoutside="hide(index)"
+  @clickoutside="hide()"
   trigger="manual",
   :x="current.position.x",
   :y="current.position.y"
