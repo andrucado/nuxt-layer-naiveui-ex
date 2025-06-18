@@ -11,5 +11,6 @@ n-config-provider(v-bind="props.configProviderProps")
         n-notification-provider(v-bind="props.notificationProviderProps")
           n-message-provider(v-bind="props.messageProviderProps")
             nx-popmenu-provider
+            nx-drawers
             slot
 </template>

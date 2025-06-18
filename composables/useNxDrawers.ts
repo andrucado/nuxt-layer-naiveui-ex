@@ -1,38 +1,64 @@
-export type NxDrawerShowParams = {
-  content: any
-  title?: string
-  width?: string | number
-  placement?: string
-  header?: any
-  footer?: any
-  style?: string
-}
+import type { DrawerProps, DrawerContentProps } from 'naive-ui'
+import { v7 as uuid } from 'uuid'
+import { isNumber, isString } from 'is-what'
 
-type NxDrawerItem = NxDrawerShowParams & { show?: boolean }
+type NxDrawerItem = DrawerProps & {
+  content: () => VNode
+  header?: () => VNode
+  footer?: () => VNode
+  contentProps?: DrawerContentProps
+} & {
+  drawerId: string
+}
 
 export const useNxDrawers = createGlobalState(() => {
   const drawers = ref<NxDrawerItem[]>([])
 
-  async function show(params: NxDrawerShowParams) {
+  async function show(params: NxDrawerItem) {
     const arr = drawers.value
-    const item: NxDrawerItem = { ...params, show: false }
+    const item = { ...params, drawerId: uuid(), show: false }
     arr.push(item)
   }
 
-  function hide(index?: number) {
+  function hide(index?: NxDrawerItem | string | number) {
     const arr = drawers.value
-    const i = index || arr.length - 1
-    if (i < 0 && i >= arr.length) return
 
-    const item = arr[i]
+    let item: NxDrawerItem | undefined
+
+    if (isNumber(index)) {
+      const i = index || arr.length - 1
+      if (i < 0 && i >= arr.length) return
+      item = arr[i]
+    } else if (isString(index)) {
+      item = arr.find(x => x.drawerId === index)
+    } else if (!index) {
+      item = arr[arr.length - 1]
+    } else if (arr.includes(index)) {
+      item = index
+    }
+
+    if (!item) return
+    const itemIndex = arr.indexOf(item)
     item.show = false
 
     setTimeout(() => {
-      if (item === arr[i]) {
-        arr.splice(i, 1)
+      if (item === arr[itemIndex]) {
+        arr.splice(itemIndex, 1)
       }
     }, 250)
   }
+
+  watchArray(
+    drawers,
+    (_, __, added) => {
+      nextTick(() => {
+        added.forEach(x => {
+          x.show = true
+        })
+      })
+    },
+    { deep: true, immediate: true },
+  )
 
   return { drawers, show, hide }
 })
