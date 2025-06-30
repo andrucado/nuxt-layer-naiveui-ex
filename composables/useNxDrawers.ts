@@ -1,20 +1,21 @@
 import type { DrawerProps, DrawerContentProps } from 'naive-ui'
 import { v7 as uuid } from 'uuid'
 import { isNumber, isString } from 'is-what'
+import type { HTMLAttributes } from 'vue'
 
-type NxDrawerItem = DrawerProps & {
-  content: () => VNode
-  header?: () => VNode
-  footer?: () => VNode
-  contentProps?: DrawerContentProps
-} & {
-  drawerId: string
-}
+type NxDrawerItem = DrawerProps &
+  HTMLAttributes & {
+    content: () => VNode
+    header?: () => VNode
+    footer?: () => VNode
+    contentProps?: DrawerContentProps & HTMLAttributes
+    drawerId: string
+  }
 
 export const useNxDrawers = createGlobalState(() => {
   const drawers = ref<NxDrawerItem[]>([])
 
-  async function show(params: NxDrawerItem) {
+  async function show(params: Omit<NxDrawerItem, 'drawerId' | 'show'>) {
     const arr = drawers.value
     const item = { ...params, drawerId: uuid(), show: false }
     arr.push(item)

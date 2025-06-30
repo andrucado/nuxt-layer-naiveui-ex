@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NForm, NGrid, NFormItem, NFormItemGridItem } from 'naive-ui'
+import { isBoolean } from 'is-what'
 import type { FormInst, FormItemRule, GridProps } from 'naive-ui'
 import { type ComponentInstance, computed, ref, toRef } from 'vue'
 import { cloneDeep, fromPairs, get, set, isFunction, omit, defaults, merge } from 'lodash-es'
