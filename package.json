@@ -1,7 +1,7 @@
 {
   "name": "@andrucado/nuxt-layer-naiveui-ex",
   "type": "module",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "./nuxt.config.ts",
   "repository": "https://github.com/andrucado/nuxt-layer-naiveui-ex.git",
   "scripts": {
