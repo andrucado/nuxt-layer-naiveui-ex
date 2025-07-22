@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.14",
   "main": "./nuxt.config.ts",
-  "repository": "https://github.com/andrucado/nuxt-layer-naiveui-ex.git",
+  "repository": {
+    "url": "git+https://github.com/andrucado/nuxt-layer-naiveui-ex.git"
+  },
   "scripts": {
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
