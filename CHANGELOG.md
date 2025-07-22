@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v0.0.15
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.14...v0.0.15)
+
+### 🚀 Enhancements
+
+- Development update ([6eb95f4](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/6eb95f4))
+- Development update ([b9a15aa](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/b9a15aa))
+- Development update ([1ba6c93](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/1ba6c93))
+- Development update ([8e80b00](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/8e80b00))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.14
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.13...v0.0.14)
