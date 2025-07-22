@@ -41,8 +41,5 @@
     "pug": "^3.0.3",
     "sass": "^1.89.2",
     "unocss": "^66.3.2"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
   }
 }
