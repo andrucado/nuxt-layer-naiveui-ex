@@ -13,7 +13,7 @@
     "generate": "nuxt generate .playground",
     "preview": "nuxt preview .playground",
     "lint": "eslint .",
-    "release": "changelogen --release --patch && git push --follow-tags && pnpm publish",
+    "release": "changelogen --release --patch && git push --follow-tags && pnpm publish --access public",
     "release:retry": "git push --follow-tags && pnpm publish"
   },
   "devDependencies": {
