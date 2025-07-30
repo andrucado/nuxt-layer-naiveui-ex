@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.16
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.15...v0.0.16)
+
+### 🚀 Enhancements
+
+- Update for nuxt 4 ([36b2dd9](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/36b2dd9))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.15
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.14...v0.0.15)
