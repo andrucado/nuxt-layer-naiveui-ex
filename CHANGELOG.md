@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.17
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.16...v0.0.17)
+
+### 🚀 Enhancements
+
+- Fix uuid ([564132b](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/564132b))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.16
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.15...v0.0.16)
