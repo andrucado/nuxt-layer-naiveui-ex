@@ -1,5 +1,5 @@
 import type { DrawerProps, DrawerContentProps } from 'naive-ui'
-import { v7 as uuid } from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { isNumber, isString } from 'is-what'
 import type { HTMLAttributes } from 'vue'
 
