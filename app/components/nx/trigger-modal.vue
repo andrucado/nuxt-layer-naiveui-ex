@@ -45,8 +45,15 @@ useEventListener(element, 'click', e => {
 })
 
 tryOnUnmounted(() => {
-  // modalInstance?.destroy()
+  modalInstance?.destroy()
   modalInstance = undefined
+})
+
+defineExpose({
+  hide: () => {
+    modalInstance?.destroy()
+    modalInstance = undefined
+  },
 })
 </script>
 

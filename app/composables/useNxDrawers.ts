@@ -13,7 +13,7 @@ type NxDrawerItem = DrawerProps &
   }
 
 export const useNxDrawers = createGlobalState(() => {
-  const drawers = ref<NxDrawerItem[]>([])
+  const drawers = ref<any[]>([])
 
   async function show(params: Omit<NxDrawerItem, 'drawerId' | 'show'>) {
     const arr = drawers.value

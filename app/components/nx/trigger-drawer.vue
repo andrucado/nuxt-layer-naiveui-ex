@@ -1,7 +1,14 @@
 <script setup lang="ts">
-const props = defineProps<{
-  options: NxDrawerShowParams
-}>()
+import type { DrawerProps } from 'naive-ui'
+
+const props = withDefaults(
+  defineProps<{
+    options?: DrawerProps
+  }>(),
+  {
+    options: () => ({}),
+  },
+)
 
 const emit = defineEmits<{
   (e: 'trigger'): void
@@ -13,7 +20,7 @@ const slots = defineSlots<{
   footer(): any
 }>()
 
-const { show } = useNxDrawers()
+const { show, hide } = useNxDrawers()
 const element = shallowRef<HTMLElement>()
 
 useEventListener(element, 'click', () => {
@@ -25,6 +32,8 @@ useEventListener(element, 'click', () => {
   })
   emit('trigger')
 })
+
+defineExpose({ hide })
 </script>
 
 <template lang="pug">
