@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.19
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.18...v0.0.19)
+
+### 🩹 Fixes
+
+- Trigger modal unmount ([0276cdb](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/0276cdb))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.18
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.17...v0.0.18)
