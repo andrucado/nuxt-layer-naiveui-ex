@@ -45,7 +45,6 @@ useEventListener(element, 'click', e => {
 })
 
 tryOnUnmounted(() => {
-  modalInstance?.destroy()
   modalInstance = undefined
 })
 
