@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.0.18
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.17...v0.0.18)
+
+### 🚀 Enhancements
+
+- Expose trigger modal and drawer hide ([a1ee3e8](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/a1ee3e8))
+
+### 🏡 Chore
+
+- Dependency update ([f8b3583](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/f8b3583))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.17
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.16...v0.0.17)
