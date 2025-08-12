@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.20
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.19...v0.0.20)
+
+### 🚀 Enhancements
+
+- Add gridSpan and gridOffset to nx-form ([e42933c](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/e42933c))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.19
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.18...v0.0.19)
