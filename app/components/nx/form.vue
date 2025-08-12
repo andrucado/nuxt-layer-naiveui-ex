@@ -5,7 +5,6 @@ import type { FormInst, FormItemRule, GridProps } from 'naive-ui'
 import { type ComponentInstance, computed, ref, toRef } from 'vue'
 import { cloneDeep, fromPairs, get, set, isFunction, omit, defaults, merge } from 'lodash-es'
 import { onKeyPressed, useActiveElement, useFocusWithin, useVModel } from '@vueuse/core'
-import { useProvideNxFormState } from '../../composables/useNxFormState'
 
 export type NxFormField = {
   key: string
@@ -14,7 +13,6 @@ export type NxFormField = {
   renderLabel?: (value: any, formData: any) => VNode
   rules?: FormItemRule | FormItemRule[]
   noLabel?: boolean
-  span?: number
   showIf?: (formData: any) => boolean
   component?: any
   props?: Record<string, any> | ((formData: any, value: any) => any)
@@ -24,13 +22,14 @@ export type NxFormField = {
   defaultValue?: (data: any) => any
   transform?: (value: any) => any
   serialize?: (value: any, formData: Record<string, any>) => any
+  gridSpan?: number
+  gridOffset?: number
 }
 
 const props = withDefaults(
   defineProps<{
     value?: Record<string, any>
     fields: NxFormField[]
-    columns?: number
     grid?: GridProps | boolean
     formProps?: any
     disabled?: boolean
@@ -132,7 +131,7 @@ const { subForms } = useProvideNxFormState()
 
 defineExpose({
   formData,
-  validate: () => {
+  validate: async () => {
     return new Promise<void>((resolve, reject) => {
       const _form = formRef.value
       if (!_form) {
@@ -148,56 +147,53 @@ defineExpose({
       })
     })
   },
-  submit: () => {
-    // eslint-disable-next-line no-async-promise-executor
-    return new Promise<Record<string, any>>(async (resolve, reject) => {
-      const _form = formRef.value
-      if (!_form) {
-        reject()
-        return
+  submit: async () => {
+    const _form = formRef.value
+    if (!_form) {
+      return
+    }
+
+    for (const subForm of subForms) {
+      await subForm.onBeforeSubmit()
+    }
+    await nextTick()
+
+    let _formData = cloneDeep(unref(formData))
+    lastErrors.value = undefined
+
+    const omitKeys = props.fields.filter(x => x.virtual || (x.showIf && !x.showIf(_formData))).map(x => x.key)
+    if (omitKeys.length > 0) {
+      _formData = omit(_formData, omitKeys)
+    }
+
+    const defaultValues = props.fields
+      .filter(x => x.defaultValue)
+      .map(({ key, defaultValue }) => ({ key, value: defaultValue?.(_formData) }))
+
+    if (defaultValues.length > 0) {
+      const defaultObject: Record<string, any> = {}
+      for (const { key, value } of defaultValues) {
+        set(defaultObject, key, value)
       }
+      _formData = defaults(_formData, defaultObject)
+    }
 
-      for (const subForm of subForms) {
-        await subForm.onBeforeSubmit()
+    const customValues = props.fields
+      .filter(x => x.serialize)
+      .map(({ key, serialize }) => ({ key, value: serialize?.(get(_formData, key), _formData) }))
+
+    if (customValues.length > 0) {
+      const customObject: Record<string, any> = {}
+      for (const { key, value } of customValues) {
+        set(customObject, key, value)
       }
-      await nextTick()
+      _formData = merge(_formData, customObject)
+    }
 
-      let _formData = cloneDeep(unref(formData))
-      lastErrors.value = undefined
-
-      const omitKeys = props.fields.filter(x => x.virtual || (x.showIf && !x.showIf(_formData))).map(x => x.key)
-      if (omitKeys.length > 0) {
-        _formData = omit(_formData, omitKeys)
-      }
-
-      const defaultValues = props.fields
-        .filter(x => x.defaultValue)
-        .map(({ key, defaultValue }) => ({ key, value: defaultValue?.(_formData) }))
-
-      if (defaultValues.length > 0) {
-        const defaultObject: Record<string, any> = {}
-        for (const { key, value } of defaultValues) {
-          set(defaultObject, key, value)
-        }
-        _formData = defaults(_formData, defaultObject)
-      }
-
-      const customValues = props.fields
-        .filter(x => x.serialize)
-        .map(({ key, serialize }) => ({ key, value: serialize?.(get(_formData, key), _formData) }))
-
-      if (customValues.length > 0) {
-        const customObject: Record<string, any> = {}
-        for (const { key, value } of customValues) {
-          set(customObject, key, value)
-        }
-        _formData = merge(_formData, customObject)
-      }
-
+    return new Promise((resolve, reject) => {
       _form?.validate((errors?: any[]) => {
         if (!errors || errors.length === 0) {
           resolve(_formData)
-          return
         }
         lastErrors.value = errors
         reject(new Error('Form Error', { cause: errors }))
@@ -224,7 +220,7 @@ n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :dis
   component(
     :is="!!grid ? NGrid : 'div'"
     v-bind="grid && !isBoolean(grid) ? grid : {}",
-    :class="{ 'nx-form-column': !grid }"
+    :class="{ 'nx-form-column': !grid, 'nx-form-grid': grid }"
   )
     template(v-for="field in fields")
       component(
@@ -236,7 +232,8 @@ n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :dis
         :show-feedback="!!fieldHasFeedback[field.key]",
         :label-style="formProps?.labelStyle"
         style="--n-label-padding: 0px; --n-label-height: 22px; --n-blank-height: initial; letter-spacing: -0.5px",
-        :span="!!grid ? field.span : undefined"
+        :span="!!grid ? field.gridSpan : undefined",
+        :offset="!!grid ? field.gridOffset : undefined"
       )
         template(v-if="field.renderLabel && !field.noLabel" v-slot:label)
           component(:is="field.renderLabel(fieldValue[field.key], formData)", :disabled="disabled")
