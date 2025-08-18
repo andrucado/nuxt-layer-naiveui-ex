@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.21
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.20...v0.0.21)
+
+### 🚀 Enhancements
+
+- Add form columns ([90e5db4](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/90e5db4))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.20
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.19...v0.0.20)
