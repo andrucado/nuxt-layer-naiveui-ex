@@ -227,14 +227,14 @@ onKeyPressed('Enter', () => {
 <template lang="pug">
 n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :disabled="disabled")
   .nx-form-container
-    template(v-for="column in columns")
+    template(v-for="column in (columns || 1)")
       component(
         :is="!!grid ? NGrid : 'div'"
         v-bind="grid && !isBoolean(grid) ? grid : {}",
-        :class="{ 'nx-form-column': !grid, [`nx-form-column-${column}`]: !grid, 'nx-form-grid': grid }",
-        :style="columnStyles ? columnStyles[column] : undefined"
+        :class="{ 'nx-form-column': !grid, [`nx-form-column-${column - 1}`]: !grid, 'nx-form-grid': grid }",
+        :style="columnStyles ? columnStyles[column - 1] : undefined"
       )
-        template(v-for="field in columnFields[column]")
+        template(v-for="field in columnFields[column - 1]")
           component(
             :is="!!grid ? NFormItemGridItem : NFormItem"
             v-if="!!fieldVisibility[field.key]",

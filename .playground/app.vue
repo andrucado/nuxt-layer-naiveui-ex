@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NInput } from '#components'
 const { show } = useNxPopmenuProvider()
 
 const options = [
@@ -18,6 +19,14 @@ const showMe = ref(false)
 function onClickOutside() {
   showMe.value = false
 }
+
+const fields = [
+  {
+    key: 'name',
+    label: 'Name',
+    render: () => h(NInput),
+  },
+]
 </script>
 
 <template lang="pug">
@@ -31,4 +40,6 @@ nx-provider
     template(#trigger)
       n-button Hello
     div Content
+
+  nx-form(:fields="fields")
 </template>
