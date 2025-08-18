@@ -3,7 +3,7 @@ import { NForm, NGrid, NFormItem, NFormItemGridItem } from 'naive-ui'
 import { isBoolean } from 'is-what'
 import type { FormInst, FormItemRule, GridProps } from 'naive-ui'
 import { type ComponentInstance, computed, ref, toRef } from 'vue'
-import { cloneDeep, fromPairs, get, set, isFunction, omit, defaults, merge } from 'lodash-es'
+import { cloneDeep, fromPairs, get, set, isFunction, omit, defaults, merge, groupBy } from 'lodash-es'
 import { onKeyPressed, useActiveElement, useFocusWithin, useVModel } from '@vueuse/core'
 
 export type NxFormField = {
@@ -24,6 +24,7 @@ export type NxFormField = {
   serialize?: (value: any, formData: Record<string, any>) => any
   gridSpan?: number
   gridOffset?: number
+  column?: number
 }
 
 const props = withDefaults(
@@ -34,10 +35,15 @@ const props = withDefaults(
     formProps?: any
     disabled?: boolean
     gap?: string
+    columns?: number
+    columnGridTemplate?: string
+    columnStyles?: (Record<string, any> | string)[]
   }>(),
   {
     value: () => ({}),
     gap: '.75em',
+    columns: 1,
+    columnGridTemplate: '1fr',
   },
 )
 
@@ -127,6 +133,10 @@ const fieldVNodes = computed(() => {
   )
 })
 
+const columnFields = computed(() => {
+  return groupBy(props.fields, ({ column }) => column ?? 0)
+})
+
 const { subForms } = useProvideNxFormState()
 
 defineExpose({
@@ -207,7 +217,6 @@ const selectedElement = useActiveElement()
 const canEnter = computed(() => unref(focused) && unref(selectedElement) && unref(selectedElement) !== document.body)
 
 onKeyPressed('Enter', () => {
-  // console.log(unref(focused), unref(selectedElement))
   if (!unref(canEnter)) return
   emit('submit-intent')
 })
@@ -217,27 +226,30 @@ onKeyPressed('Enter', () => {
 
 <template lang="pug">
 n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :disabled="disabled")
-  component(
-    :is="!!grid ? NGrid : 'div'"
-    v-bind="grid && !isBoolean(grid) ? grid : {}",
-    :class="{ 'nx-form-column': !grid, 'nx-form-grid': grid }"
-  )
-    template(v-for="field in fields")
+  .nx-form-container
+    template(v-for="column in columns")
       component(
-        :is="!!grid ? NFormItemGridItem : NFormItem"
-        v-if="!!fieldVisibility[field.key]",
-        :label="field.label",
-        :path="field.key",
-        :show-label="!!field.label && !field.noLabel",
-        :show-feedback="!!fieldHasFeedback[field.key]",
-        :label-style="formProps?.labelStyle"
-        style="--n-label-padding: 0px; --n-label-height: 22px; --n-blank-height: initial; letter-spacing: -0.5px",
-        :span="!!grid ? field.gridSpan : undefined",
-        :offset="!!grid ? field.gridOffset : undefined"
+        :is="!!grid ? NGrid : 'div'"
+        v-bind="grid && !isBoolean(grid) ? grid : {}",
+        :class="{ 'nx-form-column': !grid, [`nx-form-column-${column}`]: !grid, 'nx-form-grid': grid }",
+        :style="columnStyles ? columnStyles[column] : undefined"
       )
-        template(v-if="field.renderLabel && !field.noLabel" v-slot:label)
-          component(:is="field.renderLabel(fieldValue[field.key], formData)", :disabled="disabled")
-        component(:is="fieldVNodes[field.key]")
+        template(v-for="field in columnFields[column]")
+          component(
+            :is="!!grid ? NFormItemGridItem : NFormItem"
+            v-if="!!fieldVisibility[field.key]",
+            :label="field.label",
+            :path="field.key",
+            :show-label="!!field.label && !field.noLabel",
+            :show-feedback="!!fieldHasFeedback[field.key]",
+            :label-style="formProps?.labelStyle"
+            style="--n-label-padding: 0px; --n-label-height: 22px; --n-blank-height: initial; letter-spacing: -0.5px",
+            :span="!!grid ? field.gridSpan : undefined",
+            :offset="!!grid ? field.gridOffset : undefined"
+          )
+            template(v-if="field.renderLabel && !field.noLabel" v-slot:label)
+              component(:is="field.renderLabel(fieldValue[field.key], formData)", :disabled="disabled")
+            component(:is="fieldVNodes[field.key]")
 </template>
 
 <style scoped lang="scss">
@@ -245,5 +257,10 @@ n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :dis
   display: flex;
   flex-direction: column;
   gap: v-bind(gap);
+}
+
+.nx-form-container {
+  display: grid;
+  grid-template-columns: v-bind(columnGridTemplate);
 }
 </style>
