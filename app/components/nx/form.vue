@@ -27,25 +27,24 @@ export type NxFormField = {
   column?: number
 }
 
-const props = withDefaults(
-  defineProps<{
-    value?: Record<string, any>
-    fields: NxFormField[]
-    grid?: GridProps | boolean
-    formProps?: any
-    disabled?: boolean
-    gap?: string
-    columns?: number
-    columnGridTemplate?: string
-    columnStyles?: (Record<string, any> | string)[]
-  }>(),
-  {
-    value: () => ({}),
-    gap: '.75em',
-    columns: 1,
-    columnGridTemplate: '1fr',
-  },
-)
+export type NxFormProps = {
+  value?: Record<string, any>
+  fields: NxFormField[]
+  grid?: GridProps | boolean
+  formProps?: any
+  disabled?: boolean
+  gap?: string
+  columns?: number
+  columnGridTemplate?: string
+  columnStyles?: (Record<string, any> | string)[]
+}
+
+const props = withDefaults(defineProps<NxFormProps>(), {
+  value: () => ({}),
+  gap: '.75em',
+  columns: 1,
+  columnGridTemplate: '1fr',
+})
 
 const disabled = toRef(props, 'disabled')
 
