@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.22
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.21...v0.0.22)
+
+### 🩹 Fixes
+
+- Form column indices ([ecfe5e7](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/ecfe5e7))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.21
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.20...v0.0.21)
