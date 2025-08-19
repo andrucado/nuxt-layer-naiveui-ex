@@ -36,6 +36,7 @@ export type NxFormProps = {
   gap?: string
   columns?: number
   columnGridTemplate?: string
+  columnGap?: string
   columnStyles?: (Record<string, any> | string)[]
 }
 
@@ -135,6 +136,8 @@ const fieldVNodes = computed(() => {
 const columnFields = computed(() => {
   return groupBy(props.fields, ({ column }) => column ?? 0)
 })
+
+const columnGridGap = computed(() => props.columnGap ?? props.gap)
 
 const { subForms } = useProvideNxFormState()
 
@@ -261,5 +264,6 @@ n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :dis
 .nx-form-container {
   display: grid;
   grid-template-columns: v-bind(columnGridTemplate);
+  grid-gap: v-bind(columnGridGap);
 }
 </style>
