@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.24
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.23...v0.0.24)
+
+### 🚀 Enhancements
+
+- Add column grid gap ([9135048](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/9135048))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.23
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.22...v0.0.23)
