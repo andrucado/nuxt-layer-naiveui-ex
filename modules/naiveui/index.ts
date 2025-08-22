@@ -33,6 +33,7 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     // nuxt.options.css.push(resolve('./runtime/assets/style.css'))
     addPlugin(resolve('./runtime/plugins/naiveui.server'))
+    addPlugin(resolve('./runtime/plugins/nx.client'))
 
     // Add imports for naive-ui components
     const naiveComponents = Object.keys(naive).filter(name => /^N[A-Z]|n-[a-z]/.test(name))
@@ -67,28 +68,5 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     nuxt.options.build.transpile.push('naive-ui')
-    /*
-    if (process.env.NODE_ENV === 'development') {
-      // Fix `vueuc` imports
-      nuxt.options.build.transpile.push('naive-ui')
-      // Fix transpilation of `@juggle/resize-observer`
-
-      extendViteConfig(config => {
-        config.plugins ||= []
-        config.plugins.push({
-          name: 'fix-transpile-juggle-resize-observer',
-          enforce: 'pre',
-          transform(code, id) {
-            if (id.includes('@juggle/resize-observer/lib/algorithms/calculateBoxSize.js')) {
-              console.log('juggle transformed')
-              return code.replace('global.navigator && global.navigator.userAgent', 'global.navigator?.userAgent')
-            }
-          },
-        })
-      })
-
-    } else {
-      nuxt.options.build.transpile.push('naive-ui', 'vueuc', '@css-render/vue3-ssr', '@iconify/vue')
-    }*/
   },
 })
