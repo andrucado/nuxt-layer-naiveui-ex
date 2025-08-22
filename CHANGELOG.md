@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v0.0.25
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.24...v0.0.25)
+
+### 🚀 Enhancements
+
+- Update README.md with Junie ([70fb3f5](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/70fb3f5))
+- Add NxIcon from @iconify/vue ([8af0d0a](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/8af0d0a))
+- Add .npmignore ([6c3d4f6](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/6c3d4f6))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.24
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.23...v0.0.24)
