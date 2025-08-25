@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.26
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.25...v0.0.26)
+
+### 🚀 Enhancements
+
+- Add enter check for textbox ([c94b160](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/c94b160))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.25
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.24...v0.0.25)
