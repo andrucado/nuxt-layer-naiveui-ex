@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NInput } from '#components'
+import type { NxFormField } from '../app/components/nx/form.vue'
 const { show } = useNxPopmenuProvider()
 
 const options = [
@@ -20,13 +21,35 @@ function onClickOutside() {
   showMe.value = false
 }
 
-const fields = [
+const fields: NxFormField[] = [
   {
     key: 'name',
     label: 'Name',
-    render: () => h(NInput),
+    render: props => {
+      return h(NInput, { ...props })
+    },
+    rules: { required: true },
+  },
+  {
+    key: 'type',
+    label: 'Type',
+    component: NInput,
+    props: {
+      type: 'textarea',
+      rows: 5,
+    },
+    rules: { required: true },
   },
 ]
+
+const form = shallowRef()
+const formData = ref({})
+
+async function clickSubmit() {
+  console.log('submitting')
+  const value = await unref(form).submit()
+  console.log(value)
+}
 </script>
 
 <template lang="pug">
@@ -41,5 +64,7 @@ nx-provider
       n-button Hello
     div Content
 
-  nx-form(:fields="fields")
+  div {{ formData }}
+  nx-form(ref="form" v-model:value="formData", :fields="fields")
+  n-button(@click="clickSubmit") Submit
 </template>

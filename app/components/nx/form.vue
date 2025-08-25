@@ -218,8 +218,9 @@ const { focused } = useFocusWithin(computed(() => unref(formRef)?.$el))
 const selectedElement = useActiveElement()
 const canEnter = computed(() => unref(focused) && unref(selectedElement) && unref(selectedElement) !== document.body)
 
-onKeyPressed('Enter', () => {
+onKeyPressed('Enter', ({ shiftKey }) => {
   if (!unref(canEnter)) return
+  if (unref(selectedElement)?.tagName.toLowerCase() === 'textarea' && !shiftKey) return
   emit('submit-intent')
 })
 
