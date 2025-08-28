@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.27
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.26...v0.0.27)
+
+### 🚀 Enhancements
+
+- Added form context for fields, reversed field props parameters ([f751bd4](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/f751bd4))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.26
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.25...v0.0.26)
