@@ -9,19 +9,25 @@ import { onKeyPressed, useActiveElement, useFocusWithin, useVModel } from '@vueu
 export type NxFormField = {
   key: string
   label?: string
-  render?: (props: { value: any; update: (newValue: any) => void }, formData: any) => VNode
-  renderLabel?: (value: any, formData: any) => VNode
+  render?: (
+    props: Record<string, any>,
+    formData: Record<string, any>,
+    context: Record<string, any> | undefined,
+  ) => VNode
+  renderLabel?: (value: any, formData: Record<string, any>, context: Record<string, any> | undefined) => VNode
   rules?: FormItemRule | FormItemRule[]
   noLabel?: boolean
-  showIf?: (formData: any) => boolean
+  showIf?: (formData: Record<string, any>, context: Record<string, any> | undefined) => boolean
   component?: any
-  props?: Record<string, any> | ((formData: any, value: any) => any)
+  props?:
+    | Record<string, any>
+    | ((value: any, formData: Record<string, any>, context: Record<string, any> | undefined) => Record<string, any>)
   valueKey?: string
   virtual?: boolean
-  initialValue?: (value: any, formData: any) => any
-  defaultValue?: (data: any) => any
-  transform?: (value: any) => any
-  serialize?: (value: any, formData: Record<string, any>) => any
+  initialValue?: (value: any, formData: Record<string, any>, context: Record<string, any> | undefined) => any
+  defaultValue?: (context: Record<string, any> | undefined) => any
+  transform?: (value: any, formData: Record<string, any>, context: Record<string, any> | undefined) => any
+  serialize?: (value: any, formData: Record<string, any>, context: Record<string, any> | undefined) => any
   gridSpan?: number
   gridOffset?: number
   column?: number
@@ -38,6 +44,7 @@ export type NxFormProps = {
   columnGridTemplate?: string
   columnGap?: string
   columnStyles?: (Record<string, any> | string)[]
+  context?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<NxFormProps>(), {
@@ -86,7 +93,9 @@ const fieldHasFeedback = computed(() => {
 
 const fieldVisibility = computed(() => {
   const _data = computedFormData.value
-  return Object.fromEntries(props.fields.map(({ key, showIf }) => [key, isFunction(showIf) ? showIf(_data) : true]))
+  return Object.fromEntries(
+    props.fields.map(({ key, showIf }) => [key, isFunction(showIf) ? showIf(_data, props.context) : true]),
+  )
 })
 
 let initial = true
@@ -96,7 +105,7 @@ const fieldValue = computed(() => {
     props.fields.map(({ key, initialValue }) => {
       let value = get(_data, key)
       if (initial && initialValue) {
-        value = initialValue(value, _data)
+        value = initialValue(value, _data, props.context)
       }
       return [key, value]
     }),
@@ -113,22 +122,23 @@ const fieldVNodes = computed(() => {
   const _data = computedFormData.value
   const _fieldValues = fieldValue.value
   return Object.fromEntries(
-    props.fields.map(({ key, render, component, props, valueKey, transform }) => {
+    props.fields.map(({ key, render, component, props: fieldProps, valueKey, transform }) => {
       valueKey ??= 'value'
-      const value = transform ? transform(_fieldValues[key]) : _fieldValues[key]
+      const value = transform ? transform(_fieldValues[key], _mainFormData, props.context) : _fieldValues[key]
       const renderProps = {
-        ...(isFunction(props) ? props(_mainFormData, value) : props),
+        ...(isFunction(fieldProps) ? fieldProps(value, _mainFormData, props.context) : fieldProps),
         [valueKey]: value,
         [`onUpdate:${valueKey}`]: value => {
           const newData = cloneDeep(_data)
           set(newData, key, value)
           emit('update:value', newData)
         },
+        disabled: !!unref(disabled) || undefined,
       }
-      if (unref(disabled)) {
-        renderProps.disabled = true
-      }
-      return [key, render ? render(renderProps, _data) : component ? h(component, renderProps) : undefined]
+      return [
+        key,
+        render ? render(renderProps, _data, props.context) : component ? h(component, renderProps) : undefined,
+      ]
     }),
   )
 })
@@ -173,7 +183,9 @@ defineExpose({
     let _formData = cloneDeep(unref(formData))
     lastErrors.value = undefined
 
-    const omitKeys = props.fields.filter(x => x.virtual || (x.showIf && !x.showIf(_formData))).map(x => x.key)
+    const omitKeys = props.fields
+      .filter(x => x.virtual || (x.showIf && !x.showIf(_formData, props.context)))
+      .map(x => x.key)
     if (omitKeys.length > 0) {
       _formData = omit(_formData, omitKeys)
     }
@@ -192,7 +204,7 @@ defineExpose({
 
     const customValues = props.fields
       .filter(x => x.serialize)
-      .map(({ key, serialize }) => ({ key, value: serialize?.(get(_formData, key), _formData) }))
+      .map(({ key, serialize }) => ({ key, value: serialize?.(get(_formData, key), _formData, props.context) }))
 
     if (customValues.length > 0) {
       const customObject: Record<string, any> = {}
