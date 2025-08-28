@@ -133,7 +133,9 @@ const fieldVNodes = computed(() => {
           set(newData, key, value)
           emit('update:value', newData)
         },
-        disabled: !!unref(disabled) || undefined,
+      }
+      if (unref(disabled)) {
+        renderProps.disabled = true
       }
       return [
         key,
