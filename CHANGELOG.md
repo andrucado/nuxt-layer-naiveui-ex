@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.28
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.27...v0.0.28)
+
+### 🩹 Fixes
+
+- Revert disabled setting ([946a72f](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/946a72f))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.27
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.26...v0.0.27)
