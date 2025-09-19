@@ -101,7 +101,11 @@ const fieldVisibility = computed(() => {
 let initial = true
 const fieldValue = computed(() => {
   const _data = formData.value
-  const result = Object.fromEntries(
+  if (_data) {
+    // only stop when formData has an object
+    initial = false
+  }
+  return Object.fromEntries(
     props.fields.map(({ key, initialValue }) => {
       let value = get(_data, key)
       if (initial && initialValue) {
@@ -110,11 +114,6 @@ const fieldValue = computed(() => {
       return [key, value]
     }),
   )
-  if (_data) {
-    // only stop when formData has an object
-    initial = false
-  }
-  return result
 })
 
 const fieldVNodes = computed(() => {
@@ -134,9 +133,11 @@ const fieldVNodes = computed(() => {
           emit('update:value', newData)
         },
       }
+      /*
       if (unref(disabled)) {
         renderProps.disabled = true
       }
+      */
       return [
         key,
         render ? render(renderProps, _data, props.context) : component ? h(component, renderProps) : undefined,
@@ -242,7 +243,7 @@ onKeyPressed('Enter', ({ shiftKey }) => {
 </script>
 
 <template lang="pug">
-n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :disabled="disabled")
+n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :disabled)
   .nx-form-container
     template(v-for="column in (columns || 1)")
       component(
@@ -262,11 +263,12 @@ n-form(ref="formRef" v-bind="formProps", :model="formData", :rules="rules", :dis
             :label-style="formProps?.labelStyle"
             style="--n-label-padding: 0px; --n-label-height: 22px; --n-blank-height: initial; letter-spacing: -0.5px",
             :span="!!grid ? field.gridSpan : undefined",
-            :offset="!!grid ? field.gridOffset : undefined"
+            :offset="!!grid ? field.gridOffset : undefined",
+            :disabled
           )
             template(v-if="field.renderLabel && !field.noLabel" v-slot:label)
-              component(:is="field.renderLabel(fieldValue[field.key], formData)", :disabled="disabled")
-            component(:is="fieldVNodes[field.key]")
+              component(:is="field.renderLabel(fieldValue[field.key], formData)", :disabled)
+            component(:is="fieldVNodes[field.key]", :disabled)
 </template>
 
 <style scoped lang="scss">
