@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.29
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.28...v0.0.29)
+
+### 🩹 Fixes
+
+- Try fix initialValue and disabled ([fc35d8c](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/fc35d8c))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.28
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.27...v0.0.28)
