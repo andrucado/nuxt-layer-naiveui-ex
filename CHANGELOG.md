@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.32
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.31...v0.0.32)
+
+### 🚀 Enhancements
+
+- Added type imports to avoid errors ([6660303](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/6660303))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.31
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.30...v0.0.31)
