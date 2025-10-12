@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.31
+
+[compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.30...v0.0.31)
+
+### 🚀 Enhancements
+
+- Update deps ([6c2dd5a](https://github.com/andrucado/nuxt-layer-naiveui-ex/commit/6c2dd5a))
+
+### ❤️ Contributors
+
+- Andrew Alegre ([@andrucado](https://github.com/andrucado))
+
 ## v0.0.30
 
 [compare changes](https://github.com/andrucado/nuxt-layer-naiveui-ex/compare/v0.0.29...v0.0.30)
